@@ -159,3 +159,40 @@ tests/RcCars.Tests contains xUnit tests for the domain, commands, parsers,
 simulator and the console application end to end (re-prompting on invalid
 input, EOF handling and exit codes). Every commit in the history builds and
 its tests pass.
+
+
+DEVELOPMENT PROCESS AND USE OF AI
+---------------------------------
+AI tools were used openly in this assignment. The process:
+
+  1. First draft. Claude Code (Claude Opus 5.5) was given the assignment text and
+     generated a complete first version. It is kept
+     unchanged on the branch "ai-prototype".
+
+  2. Review. I reviewed the draft with Claude Code (Claude Opus 5.5), treating
+     it like a colleague's pull request:
+       * Kept: the core design - value objects, the command pattern with pure
+         commands, a result type instead of exceptions for wall hits, and a
+         console layer that can be tested end to end.
+       * Removed: a configuration system (appsettings per environment,
+         environment variables, command line overrides) and a custom file
+         logger. Nothing in the assignment asks for them, they made up about a
+         third of the code, and making the command letters configurable
+         contradicts them being part of the input format (YAGNI).
+       * Removed: test-only convenience constructors that had leaked into the
+         production API.
+       * Changed: project layout to src/ + tests/, with shared build settings
+         in Directory.Build.props so warnings-as-errors also covers the tests.
+       * Changed: the git history, which consisted of browser uploads.
+
+  3. Rebuild. Claude Code prepared the cleaned-up files split into one step
+     per commit, and checked that every step builds and passes its tests.
+     I went through each step, applied it and committed it myself: the
+     requirements and assumptions first, then the domain bottom-up with tests
+     in every commit, and the console layer last.
+
+  4. Checked by hand: the trace of the sample input (see EXAMPLE), the edge
+     cases listed under ASSUMPTIONS, and piped input.
+
+To compare the first draft with the final solution:
+    git diff ai-prototype main
