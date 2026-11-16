@@ -27,21 +27,37 @@ public sealed class SimulatorConsoleApp
     }
 
     /// <summary>
-    /// Runs one simulation and returns a process exit code (see <see cref="ExitCodes"/>).
+    /// Runs simulations until the user chooses to exit and returns a process exit code
+    /// (see <see cref="ExitCodes"/>) based on the last simulation.
     /// </summary>
     public int Run()
     {
         _output.WriteLine("RC car simulator - Monster Truck");
-        _output.WriteLine();
 
-        var result = RunSimulation();
-        if (result is null)
+        var exitCode = ExitCodes.Success;
+        for (var simulationNumber = 1; ; simulationNumber++)
         {
-            _output.WriteLine("No more input available. The simulation was aborted.");
-            return ExitCodes.InputAborted;
+            _output.WriteLine();
+            _output.WriteLine($"--- Simulation #{simulationNumber} ---");
+
+            var result = RunSimulation();
+            if (result is null)
+            {
+                _output.WriteLine("No more input available. The simulation was aborted.");
+                return ExitCodes.InputAborted;
+            }
+
+            exitCode = result.IsSuccess ? ExitCodes.Success : ExitCodes.HitWall;
+
+            if (!AskToRunAgain())
+            {
+                break;
+            }
         }
 
-        return result.IsSuccess ? ExitCodes.Success : ExitCodes.HitWall;
+        _output.WriteLine();
+        _output.WriteLine("Exiting the simulator. Goodbye!");
+        return exitCode;
     }
 
     /// <summary>Asks for input, runs one simulation and prints the result. Returns <c>null</c> if the input stream ends.</summary>
@@ -80,6 +96,14 @@ public sealed class SimulatorConsoleApp
 
         return result;
     }
+
+    /// <summary>Returns <c>true</c> if the user wants a new simulation. End of input counts as "no".</summary>
+    private bool AskToRunAgain() =>
+        TryPrompt(
+            "Do you want to run a new simulation? (Y)es to start over, (N)o to exit:",
+            InputParser.ParseYesNo,
+            out var runAgain)
+        && runAgain;
 
     /// <summary>
     /// Prompts until the parser accepts the input. Returns <c>false</c> if the input stream ends.

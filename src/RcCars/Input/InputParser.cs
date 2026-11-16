@@ -52,6 +52,20 @@ public static class InputParser
         return new CarPose(position, heading);
     }
 
+    /// <summary>Parses a yes/no answer: Y, YES, N or NO (case insensitive).</summary>
+    /// <exception cref="InputFormatException">The answer is neither yes nor no.</exception>
+    public static bool ParseYesNo(string line)
+    {
+        ArgumentNullException.ThrowIfNull(line);
+
+        return line.Trim().ToUpperInvariant() switch
+        {
+            "Y" or "YES" => true,
+            "N" or "NO" => false,
+            _ => throw new InputFormatException($"'{line.Trim()}' is not a valid answer. Please answer Y (yes) or N (no)."),
+        };
+    }
+
     private static string[] Tokenize(string line, int expectedCount, string expectedFormat)
     {
         ArgumentNullException.ThrowIfNull(line);

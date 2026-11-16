@@ -44,9 +44,15 @@ Input handling
     unknown letter is an input error, not a failed simulation.
   * Invalid input is reported with a descriptive message and the user is
     asked again for that same value (earlier, valid answers are kept).
-  * If the input stream ends (EOF) before all values have been entered the
-    program stops with a separate exit code.
-  * Only the Monster Truck is simulated (per the assignment).
+  * If the input stream ends (EOF) during a simulation the program stops with
+    exit code 2. If it ends at the "run a new simulation?" question it is
+    treated as "no" and the program exits normally.
+  * The "run a new simulation?" question accepts Y/YES/N/NO (case
+    insensitive); any other answer is rejected and the question is repeated.
+    Running several simulations in one session is an addition of mine; the
+    assignment only asks for one.
+  * Only the Monster Truck is simulated (per the assignment). Each new
+    simulation starts from scratch (new room, start position and commands).
 
 The sample input from the assignment
   Room 8 6, start 2 3 N, commands FFFRFFLBB.

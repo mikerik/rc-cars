@@ -60,4 +60,25 @@ public class InputParserTests
 
         Assert.Contains(expectedMessagePart, ex.Message);
     }
+
+    [Theory]
+    [InlineData("Y", true)]
+    [InlineData(" yes ", true)]
+    [InlineData("n", false)]
+    [InlineData("No", false)]
+    public void ParseYesNo_ValidAnswer_ReturnsChoice(string line, bool expected)
+    {
+        Assert.Equal(expected, InputParser.ParseYesNo(line));
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("maybe")]
+    [InlineData("yn")]
+    public void ParseYesNo_InvalidAnswer_Throws(string line)
+    {
+        var ex = Assert.Throws<InputFormatException>(() => InputParser.ParseYesNo(line));
+
+        Assert.Contains("Y (yes) or N (no)", ex.Message);
+    }
 }
