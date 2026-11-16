@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
+    <File Path="ReadMe.txt" />
   </Folder>
   <Project Path="src/RcCars/RcCars.csproj" />
   <Project Path="tests/RcCars.Tests/RcCars.Tests.csproj" />
