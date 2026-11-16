@@ -4,6 +4,6 @@
     <File Path="Directory.Build.props" />
     <File Path="ReadMe.txt" />
   </Folder>
-  <Project Path="src/RcCars/RcCars.csproj" />
-  <Project Path="tests/RcCars.Tests/RcCars.Tests.csproj" />
+  <Project Path="RcCars/RcCars.csproj" />
+  <Project Path="RcCars.Tests/RcCars.Tests.csproj" />
 </Solution>

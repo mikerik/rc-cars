@@ -32,7 +32,10 @@ public sealed class SimulatorConsoleApp
     /// </summary>
     public int Run()
     {
-        _output.WriteLine("RC car simulator - Monster Truck");
+        _output.WriteLine();
+        _output.WriteLine(" *----------------------------------*");
+        _output.WriteLine(" | RC CAR SIMULATOR: Monster Truck |");
+        _output.WriteLine(" *----------------------------------*");
 
         var exitCode = ExitCodes.Success;
         for (var simulationNumber = 1; ; simulationNumber++)

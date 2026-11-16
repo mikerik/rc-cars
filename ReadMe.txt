@@ -17,7 +17,7 @@ Requirements: .NET 10 SDK.
 
   Command line (from the repository root):
     dotnet build
-    dotnet run --project src/RcCars
+    dotnet run --project RcCars
     dotnet test
 
 For each simulation the simulator asks for three lines of input:
@@ -31,7 +31,7 @@ a new simulation. Answer Y (yes) to start over with a new room, or N (no) to
 exit the simulator.
 
 Input can also be piped, e.g. (PowerShell):
-    "8 6", "2 3 N", "FFFRFFLBB" | dotnet run --project src/RcCars
+    "8 6", "2 3 N", "FFFRFFLBB" | dotnet run --project RcCars
 
 Exit codes (useful when the simulator is scripted):
   0 = the last simulation was successful
@@ -105,7 +105,7 @@ Input handling
 DESIGN
 ------
 The code is split into small, single-responsibility parts (one folder each
-in src/RcCars):
+in RcCars/):
 
   Domain/      Value objects with no I/O: Heading (rotation and letter
                conversion), Position, CarPose (position + heading) and Room
@@ -155,7 +155,7 @@ the build (.editorconfig).
 
 TESTS
 -----
-tests/RcCars.Tests contains xUnit tests for the domain, commands, parsers,
+RcCars.Tests contains xUnit tests for the domain, commands, parsers,
 simulator and the console application end to end (re-prompting on invalid
 input, EOF handling and exit codes). Every commit in the history builds and
 its tests pass.
@@ -181,7 +181,7 @@ AI tools were used openly in this assignment. The process:
          contradicts them being part of the input format (YAGNI).
        * Removed: test-only convenience constructors that had leaked into the
          production API.
-       * Changed: project layout to src/ + tests/, with shared build settings
+       * Changed: the projects now sit side by side (RcCars/ and RcCars.Tests/) instead of the tests being nested in the app folder, with shared build settings
          in Directory.Build.props so warnings-as-errors also covers the tests.
        * Changed: the git history, which consisted of browser uploads.
 
